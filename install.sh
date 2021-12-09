@@ -3,10 +3,11 @@
 echo "Cyborg R.A.T 3 Fix"
 echo "Created by seanb126"
 
-# checks if file exists
-#if [ -e /etc/X11/xorg.conf.d/50-vmmouse.conf ]
+echo "Fix based off "
 
 FILENAME="/etc/X11/xorg.conf.d/50-vmmouse.conf"
+
+# current fix deletes functionality
 FIX='Section "InputDevice"
     Identifier     "Mouse0"
     Driver         "evdev"
