@@ -1,10 +1,7 @@
 #!/bin/sh
 
-echo "Cyborg R.A.T 3 Fix"
-echo "Created by seanb126"
-
-echo "Fix based off "
-
+execute_install()
+{
 FILENAME="/etc/X11/xorg.conf.d/910-rat-xx.conf"
 
 FIX='# RAT3 mouse
@@ -32,3 +29,28 @@ else
     touch $FILENAME
     echo "$FIX" > $FILENAME
 fi
+}
+
+echo ""
+echo "Cyborg R.A.T. 3 Fix for X11 systems"
+echo "Created by seanb126"
+echo ""
+echo "This software is licensed under the MIT License"
+echo "See: " # insert license
+echo ""
+#echo "Fix based off https://wiki.archlinux.org/title/Mad_Catz_Mouse"
+echo ""
+
+echo "WARNING: It is advised that you create a system backup before proceeding!"
+echo ""
+read -p "Are you sure you wish to proceed? (y/N)" answer
+case ${answer:0:1} in
+    y|Y|yes|Yes|YES )
+        execute_install
+    ;;
+    * )
+        exit
+    ;;
+esac
+
+
