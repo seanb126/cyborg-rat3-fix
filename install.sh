@@ -1,42 +1,153 @@
 #!/bin/sh
 
-echo "Cyborg R.A.T 3 Fix"
-echo "Created by seanb126"
+# Constants
 
-echo "Fix based off "
+#file name + desired location
+FILENAME="/etc/X11/xorg.conf.d/910-rat-xx.conf"
 
-FILENAME="/etc/X11/xorg.conf.d/50-vmmouse.conf"
-
-# current fix deletes functionality
-FIX='Section "InputDevice"
-    Identifier     "Mouse0"
-    Driver         "evdev"
-    Option         "Name" "Saitek Cyborg R.A.T.3 Mouse"
-    Option         "Vendor" "06a3"
-    Option         "Product" "0ccc"
-    Option         "Protocol" "auto"
-    Option         "Device" "/dev/input/event4"
-    Option         "Emulate3Buttons" "no"
-    Option         "Buttons" "7"
-    Option         "ZAxisMapping" "4 5"
-    Option         "ButtonMapping" "1 2 3 4 5 6 7 0 0 0 0 0 0 0"
-    Option         "Resolution" "3200"
+# fix text
+FIX='# RAT3 mouse
+Section "InputClass"
+ Identifier "Mouse Remap"
+ MatchProduct "Saitek Cyborg R.A.T.3 Mouse"
+ MatchDevicePath "/dev/input/event*"
+ Option "ButtonMapping" "1 2 3 4 5 0 0 8 9 0 0 0 13 14"
 EndSection'
+
+# this is more for appearances
+progress_bar()
+{
+echo -ne '#########                                            (20%)\r'
+sleep 0.2
+echo -ne '####################                                 (40%)\r'
+sleep 0.2
+echo -ne '#################################                    (66%)\r'
+sleep 0.2
+echo -ne '########################################             (82%)\r'
+sleep 0.2
+echo -ne '##################################################   (100%)\r'
+echo -ne '\n'
+}
+
+install_fix()
+{
+touch $FILENAME
+echo "creating file..." ; progress_bar
+
+echo ""
+
+# appends fix text to file
+echo "$FIX" > $FILENAME 
+echo "Writing fix to file..."  ; progress_bar
+echo ""
+echo "Install Complete"
+echo ""
+echo "For effects to take place you must restart Xorg/X11 or restart your system"
+
+}
+
+reinstall_fix()
+{
+# removes file
+rm -rf $FILENAME
+echo ""
+echo "Removing previous install..." ; progress_bar
+
+# installs fix
+install_fix
+}
+
+execute_install()
+{
 
 # if file exists
 if [ -e $FILENAME ]
 then
-    # checks if fix already added
-    if [ ! -z $(grep "$FIX" "$FILENAME") ] ; then
-        echo "Fix already installed on this device"
-    else
-        # appends the fix to pre-existing file
-        echo "$FIX" > $FILENAME
-        #cat $FILENAME
-    fi
+    echo "
+
+
+    "
+    echo "The fix appears to already be installed."
+    echo ""
+    read -p "Do you wish to reinstall ? (y/N)" answer
+    case ${answer:0:1} in
+        y|Y|yes|Yes|YES )
+            reinstall_fix || error_msg
+        ;;
+        * )
+            exit
+        ;;
+    esac
 else
-    echo "file does not exist"
-    echo "creating file..."
-    touch $FILENAME
-    echo "$FIX" > $FILENAME
+    install_fix
 fi
+}
+
+error_msg()
+{
+echo ""
+echo "ERROR! Install failed."
+echo "Please report any issues to 'github.com/seanb126/cyborg-rat3-fix/issues'"
+}
+
+help_script()
+{
+echo "
+"
+echo "Cyborg R.A.T. 3 Fix for X11 Systems"
+echo "Created by seanb126"
+echo ""
+echo "This software is licensed under the MIT License."
+echo "
+HELP MENU"
+echo "Commands:"
+echo "  -h | Invokes the installers help menu"
+echo "  -a | !NOT IMPLEMENTED! Includes alternate method in fix"
+echo "Devices covered:"
+echo "  This fix currently only supports the Saitek/Cyborg R.A.T.3 mouse"
+echo "  In future this fix could cover the Mad Catz successor line"
+echo "Permissions:"
+echo "  This script must be run in root i.e. 'sudo sh install.sh'"
+echo ""
+
+
+
+exit
+}
+
+
+###
+# Script starts here
+###    
+
+while getopts 'h' flag; do 
+    case $flag in
+        h) help_script
+    esac
+done
+
+echo "
+"
+echo "Cyborg R.A.T. 3 Fix for X11 Systems"
+echo "Created by seanb126"
+echo "
+"
+echo "This software is licensed under the MIT License."
+echo "
+    "
+echo "WARNING: It is advised that you backup your system before installing!"
+echo ""
+# asks user if they wish to proceed
+read -p "Are you sure you wish to proceed? (y/N)" answer
+case ${answer:0:1} in
+    y|Y|yes|Yes|YES )
+        execute_install || error_msg
+    ;;
+    * )
+        exit
+    ;;
+esac
+
+
+
+
