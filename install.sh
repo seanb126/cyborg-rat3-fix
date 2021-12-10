@@ -31,15 +31,19 @@ else
 fi
 }
 
+###
+# Script starts here
+###    
 echo ""
 echo "Cyborg R.A.T. 3 Fix for X11 systems"
 echo "Created by seanb126"
 echo ""
 echo "This software is licensed under the MIT License"
 echo "See: " # insert license
-echo ""
+echo "
+"
 #echo "Fix based off https://wiki.archlinux.org/title/Mad_Catz_Mouse"
-echo ""
+
 
 echo "WARNING: It is advised that you create a system backup before proceeding!"
 echo ""
