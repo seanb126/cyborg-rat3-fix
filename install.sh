@@ -58,9 +58,12 @@ fi
 
 error_msg()
 {
-echo "ERROR! Install failed"
+echo ""
+echo "ERROR! Install failed."
 echo "Please report any issues to 'github.com/seanb126/cyborg-rat3-fix/issues'"
 }
+
+
 ###
 # Script starts here
 ###    
@@ -77,8 +80,8 @@ echo "
 
 echo "WARNING: It is advised that you create a system backup before proceeding!"
 echo ""
-echo "Loading Installer" ; progress_bar
-echo ""
+# echo "Loading Installer" ; progress_bar
+# echo ""
 read -p "Are you sure you wish to proceed? (y/N)" answer
 case ${answer:0:1} in
     y|Y|yes|Yes|YES )
