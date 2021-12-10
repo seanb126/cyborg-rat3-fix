@@ -7,9 +7,10 @@ FILENAME="/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf"
 
 # fix
 FIX='Section "InputClass"
- Identifier "Mouse Remap"
+ Identifier "Saitek Cyborg R.A.T.3 Mouse Remap"
  MatchProduct "Saitek Cyborg R.A.T.3 Mouse"
  MatchDevicePath "/dev/input/event*"
+ MatchIsPointer "True"
  Option "ButtonMapping" "1 2 3 4 5 0 0 8 9 0 0 0 13 14"
 EndSection'
 
@@ -31,7 +32,7 @@ echo -ne "Writing fix to file...Done\r"
 echo -ne "\n"
 echo "Install Complete"
 echo ""
-echo "For effects to take place you must restart Xorg/X11 or restart your system"
+echo "Restart X Server/X11 or your system to apply fix"
 echo ""
 exit
 }
