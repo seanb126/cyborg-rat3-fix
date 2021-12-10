@@ -1,4 +1,4 @@
-#!/bin/sudo sh
+#!/bin/sh
 
 # Constants
 
@@ -90,27 +90,54 @@ echo "ERROR! Install failed."
 echo "Please report any issues to 'github.com/seanb126/cyborg-rat3-fix/issues'"
 }
 
+help_script()
+{
+echo "
+"
+echo "Cyborg R.A.T. 3 Fix for X11 Systems"
+echo "Created by seanb126"
+echo ""
+echo "This software is licensed under the MIT License."
+echo "
+HELP MENU"
+echo "Commands:"
+echo "  -h | Invokes the installers help menu"
+echo "  -a | !NOT IMPLEMENTED! Includes alternate method in fix"
+echo "Devices covered:"
+echo "  This fix currently only supports the Saitek/Cyborg R.A.T.3 mouse"
+echo "  In future this fix could cover the Mad Catz successor line"
+echo "Permissions:"
+echo "  This script must be run in root i.e. 'sudo sh install.sh'"
+echo ""
+
+
+
+exit
+}
 
 
 ###
 # Script starts here
 ###    
-echo "
 
+while getopts 'h' flag; do 
+    case $flag in
+        h) help_script
+    esac
+done
+
+echo "
 "
-echo "Cyborg R.A.T. 3 Fix for X11 systems"
+echo "Cyborg R.A.T. 3 Fix for X11 Systems"
 echo "Created by seanb126"
 echo "
-
 "
-echo "This software is licensed under the MIT License"
-echo "See: 'github.com/seanb126/cyborg-rat3-fix/blob/main/LICENSE'" # insert license
+echo "This software is licensed under the MIT License."
 echo "
-
-
     "
 echo "WARNING: It is advised that you backup your system before installing!"
 echo ""
+# asks user if they wish to proceed
 read -p "Are you sure you wish to proceed? (y/N)" answer
 case ${answer:0:1} in
     y|Y|yes|Yes|YES )
