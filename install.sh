@@ -19,16 +19,16 @@ install_fix()
 
 echo -ne "Creating file...\r"
 touch $FILENAME || error_msg
+sleep 1
 echo -ne "Creating file...Done\r"
 echo -ne "\n"
-echo ""
 
 # appends fix text to file
 echo -ne "Writing fix to file...\r"
 echo "$FIX" > $FILENAME || error_msg
+sleep 1
 echo -ne "Writing fix to file...Done\r"
 echo -ne "\n"
-echo ""
 echo "Install Complete"
 echo ""
 echo "For effects to take place you must restart Xorg/X11 or restart your system"
@@ -42,8 +42,10 @@ reinstall_fix()
 echo ""
 echo -ne "Removing previous install...\r" 
 rm -rf $FILENAME || error_msg
+sleep 1
 echo -ne "Removing previous install...Done\r" 
 echo -ne '\n'
+
 # installs fix
 install_fix
 }
@@ -55,8 +57,6 @@ execute_install()
 if [ -e $FILENAME ]
 then
     echo "
-
-
     "
     echo "The fix appears to already be installed."
     echo ""
