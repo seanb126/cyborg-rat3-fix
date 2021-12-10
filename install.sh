@@ -3,7 +3,7 @@
 # Constants
 
 #file name + desired location
-FILENAME="/etc/X11/xorg.conf.d/910-rat-xx.conf"
+FILENAME="/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf"
 
 # fix
 FIX='Section "InputClass"
