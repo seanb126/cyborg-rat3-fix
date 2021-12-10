@@ -79,6 +79,9 @@ error_msg()
 {
 echo ""
 echo "ERROR! Install failed."
+echo ""
+echo "If a permission error was thrown, try running the script in root with: 'sudo install.sh'"
+echo ""
 echo "Please report any issues to 'github.com/seanb126/cyborg-rat3-fix/issues'"
 echo ""
 exit
@@ -154,7 +157,7 @@ else
     echo ""
     echo "This fix requires root privileges"
     # asks to rerun script as sudo
-    sudo echo ""
+    sudo echo "" || error_msg
     start
     echo ""
 fi
