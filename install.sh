@@ -1,8 +1,11 @@
 #!/bin/sudo sh
 
 # Constants
+
+#file name + desired location
 FILENAME="/etc/X11/xorg.conf.d/910-rat-xx.conf"
 
+# fix text
 FIX='# RAT3 mouse
 Section "InputClass"
  Identifier "Mouse Remap"
@@ -32,8 +35,9 @@ touch $FILENAME
 echo "creating file..." ; progress_bar
 
 echo ""
-    
-echo "$FIX" > $FILENAME
+
+# appends fix text to file
+echo "$FIX" > $FILENAME 
 echo "Writing fix to file..."  ; progress_bar
 echo ""
 echo "Install Complete"
@@ -46,7 +50,8 @@ reinstall_fix()
 {
 # removes file
 rm -rf $FILENAME
-echo "Removing previous install: " ; progress_bar
+echo ""
+echo "Removing previous install..." ; progress_bar
 
 # installs fix
 install_fix
@@ -58,10 +63,13 @@ execute_install()
 # if file exists
 if [ -e $FILENAME ]
 then
+    echo "
+
+
+    "
+    echo "The fix appears to already be installed."
     echo ""
-    echo "The file appears to already be installed"
-    echo ""
-    read -p "do you wish to reinstall ? (y/N)" answer
+    read -p "Do you wish to reinstall ? (y/N)" answer
     case ${answer:0:1} in
         y|Y|yes|Yes|YES )
             reinstall_fix || error_msg
@@ -83,23 +91,26 @@ echo "Please report any issues to 'github.com/seanb126/cyborg-rat3-fix/issues'"
 }
 
 
+
 ###
 # Script starts here
 ###    
-echo ""
+echo "
+
+"
 echo "Cyborg R.A.T. 3 Fix for X11 systems"
 echo "Created by seanb126"
-echo ""
-echo "This software is licensed under the MIT License"
-echo "See: " # insert license
 echo "
-"
-#echo "Fix based off https://wiki.archlinux.org/title/Mad_Catz_Mouse"
 
-echo "WARNING: It is advised that you create a system backup before proceeding!"
+"
+echo "This software is licensed under the MIT License"
+echo "See: 'github.com/seanb126/cyborg-rat3-fix/blob/main/LICENSE'" # insert license
+echo "
+
+
+    "
+echo "WARNING: It is advised that you backup your system before installing!"
 echo ""
-# echo "Loading Installer" ; progress_bar
-# echo ""
 read -p "Are you sure you wish to proceed? (y/N)" answer
 case ${answer:0:1} in
     y|Y|yes|Yes|YES )
