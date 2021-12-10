@@ -109,31 +109,8 @@ echo ""
 exit
 }
 
-
-###
-# Script starts here
-###    
-
-# checks for run flags
-while getopts 'h' flag; do 
-    case $flag in
-        h) help_script
-    esac
-done
-
-
-# request sudo privileges
-if sudo -nv 2>/dev/null && sudo -v ; then
-    continue
-else
-    echo ""
-    echo "This fix requires root privileges"
-    # asks to rerun script as sudo
-    echo "Please use 'sudo install.sh'"
-    echo ""
-    exit # closes current script
-fi
-
+start()
+{
 echo "
 "
 echo "Cyborg R.A.T. 3 Fix for X11 Systems"
@@ -155,7 +132,29 @@ case ${answer:0:1} in
         exit
     ;;
 esac
+}
 
 
+###
+# Script starts here
+###    
+
+# checks for run flags
+while getopts 'h' flag; do 
+    case $flag in
+        h) help_script
+    esac
+done
 
 
+# request sudo privileges
+if sudo -nv 2>/dev/null && sudo -v ; then
+    start
+else
+    echo ""
+    echo "This fix requires root privileges"
+    # asks to rerun script as sudo
+    sudo echo ""
+    start
+    echo ""
+fi
