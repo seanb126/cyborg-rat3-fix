@@ -139,7 +139,8 @@ if sudo -nv 2>/dev/null && sudo -v ; then
     continue
 else
     echo "This script requires sudo/root privileges"
-    sudo sh install.sh # asks to rerun script as sudo
+    # asks to rerun script as sudo
+    sudo sh install.sh || error_msg
     exit # closes current script
 fi
 
