@@ -13,33 +13,21 @@ FIX='Section "InputClass"
  Option "ButtonMapping" "1 2 3 4 5 0 0 8 9 0 0 0 13 14"
 EndSection'
 
-# this is more for appearances
-progress_bar()
-{
-echo -ne '#########                                            (20%)\r'
-sleep 0.2
-echo -ne '####################                                 (40%)\r'
-sleep 0.2
-echo -ne '#################################                    (66%)\r'
-sleep 0.2
-echo -ne '########################################             (82%)\r'
-sleep 0.2
-echo -ne '##################################################   (100%)\r'
-echo -ne '\n'
-}
 
 install_fix()
 {
 
-echo "creating file..."
+echo -ne "Creating file...\r"
 touch $FILENAME || error_msg
-progress_bar
+echo -ne "Creating file...Done\r"
+echo -ne "\n"
 echo ""
 
 # appends fix text to file
-echo "Writing fix to file..."
+echo -ne "Writing fix to file...\r"
 echo "$FIX" > $FILENAME || error_msg
-progress_bar
+echo -ne "Writing fix to file...Done\r"
+echo -ne "\n"
 echo ""
 echo "Install Complete"
 echo ""
@@ -52,10 +40,10 @@ reinstall_fix()
 {
 # removes file
 echo ""
-echo "Removing previous install..." 
+echo -ne "Removing previous install...\r" 
 rm -rf $FILENAME || error_msg
-progress_bar
-
+echo -ne "Removing previous install...Done\r" 
+echo -ne '\n'
 # installs fix
 install_fix
 }
@@ -137,9 +125,11 @@ done
 if sudo -nv 2>/dev/null && sudo -v ; then
     continue
 else
-    echo "This fix requires sudo/root privileges"
+    echo ""
+    echo "This fix requires root privileges"
     # asks to rerun script as sudo
-    sudo sh install.sh || error_msg
+    echo "Please use 'sudo install.sh'"
+    echo ""
     exit # closes current script
 fi
 
