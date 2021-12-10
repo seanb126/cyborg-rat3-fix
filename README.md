@@ -1,6 +1,5 @@
 # Cyborg R.A.T.3 Fix for X11 Systems
-This software includes a script that will install a fix, to allow the Saitek/Cyborg R.A.T.3 to work
-fluently on Linux systems that use X Server/X11 for their display manager.
+This fix will resolve the clash issue between X Server and the Saitek/Cyborg R.A.T.3. Without this fix, the mouse becomes practically unusable in X11, especially when switching between windows.
 
 ## Warning
 This fix will create config files inside the X11 directory(/etc/X11/xorg.conf.d/).
@@ -60,10 +59,11 @@ Tested on:
 If you find any issues when installing the software, do not hesitate to report it in the Issues
 section of the GitHub repository.
 
-## Additional Information
-This fix is inspired by the advice provided on the Arch Wiki for Mad Catz devices.
+## Useful Information
+If this fix doesn't work, here are a few pointers on how to possibly resolve your mouse issues:
+- https://wiki.archlinux.org/title/Mad_Catz_Mouse
+- https://www.x.org/releases/current/doc/man/man5/xorg.conf.5.xhtml
 
-See: https://wiki.archlinux.org/title/Mad_Catz_Mouse
 
 ## License
 MIT License(see LICENSE)
