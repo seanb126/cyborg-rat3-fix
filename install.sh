@@ -31,27 +31,31 @@ echo -ne '\n'
 
 install_fix()
 {
-touch $FILENAME
-echo "creating file..." ; progress_bar
 
+echo "creating file..."
+touch $FILENAME || error_msg
+progress_bar
 echo ""
 
 # appends fix text to file
-echo "$FIX" > $FILENAME 
-echo "Writing fix to file..."  ; progress_bar
+echo "Writing fix to file..."
+echo "$FIX" > $FILENAME || error_msg
+progress_bar
 echo ""
 echo "Install Complete"
 echo ""
 echo "For effects to take place you must restart Xorg/X11 or restart your system"
-
+echo ""
+exit
 }
 
 reinstall_fix()
 {
 # removes file
-rm -rf $FILENAME
 echo ""
-echo "Removing previous install..." ; progress_bar
+echo "Removing previous install..." 
+rm -rf $FILENAME || error_msg
+progress_bar
 
 # installs fix
 install_fix
@@ -88,6 +92,8 @@ error_msg()
 echo ""
 echo "ERROR! Install failed."
 echo "Please report any issues to 'github.com/seanb126/cyborg-rat3-fix/issues'"
+echo ""
+exit
 }
 
 help_script()
