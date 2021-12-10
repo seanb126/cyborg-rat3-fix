@@ -126,11 +126,22 @@ exit
 # Script starts here
 ###    
 
+# checks for run flags
 while getopts 'h' flag; do 
     case $flag in
         h) help_script
     esac
 done
+
+
+# request sudo privileges
+if sudo -nv 2>/dev/null && sudo -v ; then
+    continue
+else
+    echo "This script requires sudo/root privileges"
+    sudo sh install.sh # asks to rerun script as sudo
+    exit # closes current script
+fi
 
 echo "
 "
