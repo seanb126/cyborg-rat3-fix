@@ -1,5 +1,20 @@
 #!/bin/sh
 
+# this is more for appearances
+progress_bar()
+{
+echo -ne '#########                                            (20%)\r'
+sleep 0.2
+echo -ne '####################                                 (40%)\r'
+sleep 0.2
+echo -ne '#################################                    (66%)\r'
+sleep 0.2
+echo -ne '########################################             (82%)\r'
+sleep 0.2
+echo -ne '##################################################   (100%)\r'
+echo -ne '\n'
+}
+
 execute_install()
 {
 FILENAME="/etc/X11/xorg.conf.d/910-rat-xx.conf"
@@ -25,12 +40,27 @@ then
     fi
 else
     echo "file does not exist"
-    echo "creating file..."
+    
     touch $FILENAME
+    echo "creating file: " ; progress_bar
+
+    echo ""
+    
     echo "$FIX" > $FILENAME
+    echo "Writing fix to file"  ; progress_bar
+    echo ""
+    echo "Install Complete"
+    echo ""
+    echo "For effects to take place you must restart Xorg/X11 or restart your system"
+
 fi
 }
 
+error_msg()
+{
+echo "ERROR! Install failed"
+echo "Please report any issues to 'github.com/seanb126/cyborg-rat3-fix/issues'"
+}
 ###
 # Script starts here
 ###    
@@ -47,14 +77,18 @@ echo "
 
 echo "WARNING: It is advised that you create a system backup before proceeding!"
 echo ""
+echo "Loading Installer" ; progress_bar
+echo ""
 read -p "Are you sure you wish to proceed? (y/N)" answer
 case ${answer:0:1} in
     y|Y|yes|Yes|YES )
-        execute_install
+        execute_install || error_msg
     ;;
     * )
         exit
     ;;
 esac
+
+
 
 
