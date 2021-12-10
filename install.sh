@@ -5,9 +5,8 @@
 #file name + desired location
 FILENAME="/etc/X11/xorg.conf.d/910-rat-xx.conf"
 
-# fix text
-FIX='# RAT3 mouse
-Section "InputClass"
+# fix
+FIX='Section "InputClass"
  Identifier "Mouse Remap"
  MatchProduct "Saitek Cyborg R.A.T.3 Mouse"
  MatchDevicePath "/dev/input/event*"
@@ -138,7 +137,7 @@ done
 if sudo -nv 2>/dev/null && sudo -v ; then
     continue
 else
-    echo "This script requires sudo/root privileges"
+    echo "This fix requires sudo/root privileges"
     # asks to rerun script as sudo
     sudo sh install.sh || error_msg
     exit # closes current script
