@@ -1,8 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 # Constants
 
 #file name + desired location
+DIR = /etc/X11/xorg.conf.d/
 FILENAME="/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf"
 
 # fix
@@ -17,6 +18,19 @@ EndSection'
 
 install_fix()
 {
+# checks if directory exists
+echo -ne "Checking directory...\r"
+if [ -e $DIR ]
+then
+    echo -ne "Checking directory...Done\r"
+    echo -ne "\n"
+    :
+else
+    echo -ne "Directory not found creating new path..."
+    mkdir /etc/X11/xorg.conf.d/ || error_msg
+    echo -ne "Directory created"
+    echo -ne "\n"
+fi
 
 echo -ne "Creating file...\r"
 touch $FILENAME || error_msg
@@ -62,7 +76,7 @@ then
     echo "The fix appears to already be installed."
     echo ""
     read -p "Do you wish to reinstall ? (y/N)" answer
-    case ${answer:0:1} in
+    case ${answer} in
         y|Y|yes|Yes|YES )
             reinstall_fix || error_msg
         ;;
@@ -127,7 +141,7 @@ echo "WARNING: It is advised that you backup your system before installing!"
 echo ""
 # asks user if they wish to proceed
 read -p "Are you sure you wish to proceed? (y/N)" answer
-case ${answer:0:1} in
+case ${answer} in
     y|Y|yes|Yes|YES )
         execute_install || error_msg
     ;;

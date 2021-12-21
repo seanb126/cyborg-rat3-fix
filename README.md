@@ -9,17 +9,10 @@ before installation.
 
 ## Installation
 
-### Method 1: wget
-This is the recommended approach to using this software.
+### Git Installation
+The quickest and best method to installing this fix, is to use git inside of a terminal.
 
-To install and execute, copy and paste the following code inside of your terminal:
-
-```bash
-wget -O - https://github.com/seanb126/cyborg-rat3-fix/blob/master/install.sh
-```
-
-### Method 2: Manual Installation
-If the 'wget' approach is not working, you can clone the repository through git:
+You can follow by simply copying the following lines:
 
 ```bash
 git clone https://github.com/seanb126/cyborg-rat3-fix.git
