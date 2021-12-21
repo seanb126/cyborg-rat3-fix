@@ -113,24 +113,57 @@ echo "
 HELP MENU"
 echo "Commands:"
 echo "  -h | Invokes the installers help menu"
-echo "  -a | !NOT IMPLEMENTED! Includes alternate method in fix"
-echo "Devices covered:"
-echo "  This fix currently only supports the Saitek/Cyborg R.A.T.3 mouse"
-echo "  In future this fix could cover the Mad Catz successor line"
-echo "Permissions:"
-echo "  This script must be run in root i.e. 'sudo sh install.sh'"
-echo ""
-
+echo "  -r | Brings you to uninstall menu"
 
 
 exit
+}
+
+remove_fix()
+{
+echo ""
+echo "Removing fix for Cyborg R.A.T.3 for Linux with X Server"
+echo -ne "Checking if previous install exists...\r"
+
+sleep 1
+if [ -e $FILENAME ]
+then
+    # remove menu
+    echo -ne "Checking if previous install exists...Done\r"
+    echo -ne "\n"
+    echo ""
+    read -p "Do you wish to uninstall fix ? (y/N)" answer
+    case ${answer} in
+        y|Y|yes|Yes|YES )
+            echo -ne "Uninstalling fix...\r"
+            rm -rf $FILENAME || error_msg
+            echo -ne "Uninstalling fix...Done\r"
+            echo -ne "\n"
+            echo "Fix uninstalled"
+            exit
+        ;;
+        * )
+            echo -ne "\n"
+            exit
+        ;;
+    esac
+else
+    echo ""
+    echo "Cannot find previous installation"
+    echo ""
+    echo "If this is an issue please report to: github.com/seanb126/cyborg-rat3-fix/issues"
+    echo ""
+    echo "Check if this file and location exists: /etc/X11/xorg.conf.d/"
+    echo "Then delete this file to manually uninistall: cyborg-rat3-fix.conf "
+    exit
+fi
 }
 
 start()
 {
 echo "
 "
-echo "Cyborg R.A.T. 3 Fix for X11 Systems"
+echo "Cyborg R.A.T. 3 Fix for Linux with X Server"
 echo "Created by seanb126"
 echo "
 "
@@ -157,9 +190,12 @@ esac
 ###    
 
 # checks for run flags
-while getopts 'h' flag; do 
+while getopts "h:r" flag; do 
     case $flag in
         h) help_script
+            ;;
+        r) remove_fix
+            ;;
     esac
 done
 

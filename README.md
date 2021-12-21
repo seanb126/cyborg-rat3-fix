@@ -1,11 +1,10 @@
-# Cyborg R.A.T.3 Fix for X11 Systems
+# Cyborg R.A.T.3 Fix for Linux Systems using X Server/X11
 This fix will resolve the clash issue between X Server and the Saitek/Cyborg R.A.T.3. Without this fix, the mouse becomes practically unusable in X11, especially when switching between windows.
 
 ## Warning
 This fix will create config files inside the X11 directory(/etc/X11/xorg.conf.d/).
 
-Therefore it is advised you make a backup of your root system using a tool like Timeshift
-before installation.
+Therefore it is advised you make a backup of your root system using a tool like Timeshift before installation.
 
 ## Installation
 
@@ -29,20 +28,23 @@ Then type the following to begin installation:
 ```bash
 sh install.sh
 ```
-The script will request sudo pivileges if they were not granted from the command-line.
+The script will request sudo privileges if they were not granted from the command-line.
 
 ## Flags
-You can access a help screen by adding a help flag:
+- You can access a help screen by adding a help flag:
 ```bash
 sh install.sh -h
 ```
-The help screen is currently redundant. However, may become useful should additional
-functionality be added in a future release.
+- You can also uninstall the fix by using the remove flag:
+```bash
+sh install.sh -r
+```
 
 ## Testing
 Tested on:
-- Manjaro (Pahvo)
+- Manjaro (Qonos)
 - Fedora 35
+- Ubuntu 20.04 LTS
 
 ## Roadmap
 - Create AUR repository
