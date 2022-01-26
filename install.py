@@ -24,9 +24,18 @@ def yes_no():
         print("Enter was pressed")
     elif usr_input in ['n', 'N', 'no', 'No', 'NO']:
         print("no was pressed")
+        exit
     else:
         print("Input not recognised. Try again")
         yes_no()
+
+def check_file_exists():
+    if not os.path.exists('test.txt'):
+        # initiate create file process
+        print("file doesnt exist")
+    elif os.path.exists('test.txt'):
+        print("File Exists")
+
 
 
 
@@ -48,3 +57,4 @@ if __name__ == '__main__':
     print((f"{colors.WARNING}WARNING: It is advised that you backup your system before installing!{colors.ORIGINAL}\n").center(cols))
 
     yes_no()
+    check_file_exists()
