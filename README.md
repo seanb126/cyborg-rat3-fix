@@ -8,6 +8,11 @@ Therefore it is advised you make a backup of your root system using a tool like 
 
 ## Installation
 
+### Note
+The Python script uses the tqdm library to present progress bars during installation. The specific version is inside the 'requirements.txt' file.
+
+However the Python script will have no issue installing the fix without this library. It will just not look as visually appealing.
+
 ### Git Installation
 The quickest and best method to installing this fix, is to use git inside of a terminal.
 

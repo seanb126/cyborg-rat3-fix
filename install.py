@@ -41,7 +41,7 @@ def check_system(): # Checks if system is Linux
     if OS != "Linux":
         print("You are not running a Linux operating system")
         print("Operation Cancelled")
-        exit
+        raise SystemExit
 
 # Function to remove previous installs
 def remove_fix():
@@ -64,7 +64,7 @@ def remove_fix():
         if os.path.exists('/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf'):
             pbar.close()
             error_msg
-            exit
+            raise SystemExit
         pbar.update(1)
         pbar.close()
 
@@ -74,7 +74,7 @@ def remove_fix():
         os.remove("/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf")
         if os.path.exists('/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf'):
             error_msg
-            exit
+            raise SystemExit
     print(f"{colors.GREEN}\nUninstall Complete")
     raise SystemExit
 
@@ -91,7 +91,7 @@ def yes_no(question):
         pass
     # No response will close script
     elif usr_input in ['n', 'N', 'no', 'No', 'NO']:
-        exit
+        raise SystemExit
     # checks if passed question includes option to uninstall fix
     elif question == 'Do you wish to reinstall':
         if usr_input in ['rem', 'remove', 'Remove', 'REMOVE']:
@@ -189,7 +189,7 @@ def create_fix(reinstall):
 def error_msg():
     print(f"{colors.ERROR}ERROR! An issue has been detected!{colors.ORIGINAL}\n")
     print("If this was unexpected: Please report the issue to 'github.com/seanb126/cyborg-rat3-fix/issues'")
-    exit
+    raise SystemExit
 
 if __name__ == '__main__':
     
