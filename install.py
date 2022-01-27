@@ -13,9 +13,12 @@ import os
 import platform
 import shutil
 from time import sleep
-from sympy import N
-from tqdm import tqdm
-from sqlalchemy import null
+
+
+try:
+    from tqdm import tqdm
+except:
+    tqdm_installed = False
 
 # Used for changing the colour of terminal outputs 
 class colors:
@@ -38,34 +41,43 @@ def check_system(): # Checks if system is Linux
     if OS != "Linux":
         print("You are not running a Linux operating system")
         print("Operation Cancelled")
-        exit
+        raise SystemExit
 
 # Function to remove previous installs
 def remove_fix():
     print("\nUninstalling Cyborg R.A.T.3 Fix")
 
     tasks = 3
-    pbar = tqdm(total=tasks, desc = "Uninstalling fix")
+    if tqdm_installed != False:
+        pbar = tqdm(total=tasks, desc = "Uninstalling fix")
 
-    # check if previous install definitely exists
-    basic_check()
-    pbar.update(1)
-    sleep(0.5)
+        # check if previous install definitely exists
+        basic_check()
+        pbar.update(1)
+        sleep(0.5)
 
-    os.remove("/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf")
-    pbar.update(1)
-    sleep(1)
+        os.remove("/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf")
+        pbar.update(1)
+        sleep(1)
 
-    #alternate check
-    if os.path.exists('/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf'):
+        #alternate check
+        if os.path.exists('/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf'):
+            pbar.close()
+            error_msg
+            raise SystemExit
+        pbar.update(1)
         pbar.close()
-        error_msg
-        exit
-    pbar.update(1)
-    pbar.close()
 
+    elif tqdm_installed == False:
+        print("Uninstalling Fix...")
+        basic_check()
+        os.remove("/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf")
+        if os.path.exists('/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf'):
+            error_msg
+            raise SystemExit
     print(f"{colors.GREEN}\nUninstall Complete")
     raise SystemExit
+
 
 # the yes/no function is used to determine if the program
 # - should continue to execute, with a no response closing the script
@@ -79,7 +91,7 @@ def yes_no(question):
         pass
     # No response will close script
     elif usr_input in ['n', 'N', 'no', 'No', 'NO']:
-        exit
+        raise SystemExit
     # checks if passed question includes option to uninstall fix
     elif question == 'Do you wish to reinstall':
         if usr_input in ['rem', 'remove', 'Remove', 'REMOVE']:
@@ -133,30 +145,42 @@ def create_fix(reinstall):
     if reinstall == True:
         tasks = 4
 
-    # progress bar
-    pbar = tqdm(total=tasks, desc = "Installing fix")
+    
     try:
         # raise Exception # tests try-catch
 
-        if reinstall == True:
-            os.remove("/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf")
+        if tqdm_installed != False:
+            # progress bar
+            pbar = tqdm(total=tasks, desc = "Installing fix")
+
+            if reinstall == True:
+                os.remove("/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf")
+                pbar.update(1)
+                sleep(0.5)
+            
+            # creates file in directory
+            file = open('/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf', 'w+')
             pbar.update(1)
             sleep(0.5)
-        
-        # creates file in directory
-        file = open('/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf', 'w+')
-        pbar.update(1)
-        sleep(0.5)
 
-        file.write(FIX)
-        pbar.update(1)
-        sleep(0.5)
+            file.write(FIX)
+            pbar.update(1)
+            sleep(0.5)
 
-        file.close()
-        pbar.update(1)
-        sleep(0.5)
+            file.close()
+            pbar.update(1)
+            sleep(0.5)
 
-        pbar.close()
+            pbar.close()
+        elif tqdm_installed == False:
+            if reinstall == True:
+                print("Removing old install...")
+                os.remove("/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf")
+            print("Installing Fix...")
+            file = open('/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf', 'w+')
+            file.write(FIX)
+            file.close()
+            print("Install Complete")
 
     except:
         error_msg()
@@ -165,7 +189,7 @@ def create_fix(reinstall):
 def error_msg():
     print(f"{colors.ERROR}ERROR! An issue has been detected!{colors.ORIGINAL}\n")
     print("If this was unexpected: Please report the issue to 'github.com/seanb126/cyborg-rat3-fix/issues'")
-    exit
+    raise SystemExit
 
 if __name__ == '__main__':
     
