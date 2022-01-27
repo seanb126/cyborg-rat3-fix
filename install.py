@@ -4,6 +4,7 @@ import shutil
 from time import sleep
 from sympy import N
 from tqdm import tqdm
+# from argparse import ArgumentParser
 
 from sqlalchemy import null
 
@@ -11,6 +12,7 @@ class colors:
     ORIGINAL = '\033[0m'
     WARNING = '\033[93m'
     ERROR = '\033[91m'
+    GREEN = '\033[92m'
 
 
 FIX = """Section "InputClass"
@@ -45,20 +47,28 @@ def yes_no(question):
 
 def check_file_exists():
     if not os.path.exists('text.txt'):
-        # initiate create file process
-        print("file doesnt exist")
+        # initiate install process
+        # Warning to user
+        print((f"{colors.WARNING}WARNING: It is advised that you backup your system before installing!{colors.ORIGINAL}\n").center(cols))
+        yes_no("Do you wish to proceed")
         create_fix(False)
     elif os.path.exists('text.txt'):
-        print('It appears that the fix has previously been installed')
+        print(f"{colors.WARNING}WARNING:It appears that the fix has previously been installed{colors.ORIGINAL}\n")
         yes_no("Do you wish to reinstall")
         print("\n")
 
         # program will of closed if user inputted 'no'
 
-        print("Reinstalling fix")
+        print(("Reinstalling fix").center(cols))
         # os.remove("text.txt")
 
         create_fix(True)
+
+def final_check():
+    if os.path.exists('text.txt'):
+        print(f"\n {colors.GREEN}Cyborg R.A.T.3 Fix Successfully Installed!{colors.ORIGINAL}\n")
+        pass
+
 
 def create_fix(reinstall):
     # progress bar
@@ -93,7 +103,8 @@ def create_fix(reinstall):
         sleep(0.5)
 
         pbar.close()
-        print("Process Complete")
+
+        
         
     except:
         print(f"{colors.ERROR}ERROR! There was an issue installing the fix{colors.ORIGINAL}\n")
@@ -103,9 +114,14 @@ def create_fix(reinstall):
 
 
 if __name__ == '__main__':
+
+    # parser = ArgumentParser()
+    # parser.add_argument("-u", "--uninstall")
     
     # check system OS
     check_system()
+
+
     
     
     cols, rows = shutil.get_terminal_size()
@@ -116,17 +132,10 @@ if __name__ == '__main__':
     print(("Created by seanb126").center(cols))
     print(("This software is licensed under the MIT License.\n").center(cols))
     
-    # Warning to user
-    print((f"{colors.WARNING}WARNING: It is advised that you backup your system before installing!{colors.ORIGINAL}\n").center(cols))
-
-    # pbar = tqdm(total=1000)
     
-    # for i in range(100):
-    #     pbar.update(10)
-    #     sleep(0.8)
-    # pbar.close()
 
     
 
-    yes_no("Do you wish to proceed")
+    # yes_no("Do you wish to proceed")
     check_file_exists()
+    final_check()
