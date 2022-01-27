@@ -1,6 +1,8 @@
 # Cyborg R.A.T.3 Fix for Linux Systems using X Server/X11
 This fix will resolve the clash issue between X Server and the Saitek/Cyborg R.A.T.3. Without this fix, the mouse becomes practically unusable in X11, especially when switching between windows.
 
+The shell(.sh) version of this fix is now deprecated. I would recommend you use the new Python3 version, to avoid compatibility issues.
+
 ## Warning
 This fix will create config files inside the X11 directory(/etc/X11/xorg.conf.d/).
 
@@ -25,12 +27,14 @@ cd cyborg-rat3-fix
 
 Then type the following to begin installation:
 
-```bash
-sh install.sh
+```python3
+python3 install.py
 ```
-The script will request sudo privileges if they were not granted from the command-line.
+The script will require root/sudo privileges.
 
 ## Flags
+Currently these flags only work in the shell(.sh) version.
+
 - You can access a help screen by adding a help flag:
 ```bash
 sh install.sh -h
@@ -40,11 +44,15 @@ sh install.sh -h
 sh install.sh -r
 ```
 
-## Testing
-Tested on:
-- Manjaro (Qonos)
+## Testing On
+Operating Systems:
+- Manjaro
 - Fedora 35
 - Ubuntu 20.04 LTS
+
+Python Versions:
+- Python 3.9.7 (Anaconda)
+- Python 3.10.1
 
 ## Roadmap
 - Create AUR repository
