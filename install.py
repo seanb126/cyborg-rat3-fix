@@ -47,7 +47,7 @@ def check_file_exists():
     if not os.path.exists('text.txt'):
         # initiate create file process
         print("file doesnt exist")
-        create_fix()
+        create_fix(False)
     elif os.path.exists('text.txt'):
         print('It appears that the fix has previously been installed')
         yes_no("Do you wish to reinstall")
@@ -56,16 +56,28 @@ def check_file_exists():
         # program will of closed if user inputted 'no'
 
         print("Reinstalling fix")
-        os.remove("text.txt")
+        # os.remove("text.txt")
 
-        create_fix()
+        create_fix(True)
 
-def create_fix():
+def create_fix(reinstall):
     # progress bar
     # three processes to be completed
-    pbar = tqdm(total=3, desc = "Installing fix")
+
+    tasks = 3
+
+    if reinstall == True:
+        tasks = 4
+
+    
+    pbar = tqdm(total=tasks, desc = "Installing fix")
     try:
         # raise Exception # tests try-catch
+
+        if reinstall == True:
+            os.remove("text.txt")
+            pbar.update(1)
+            sleep(0.5)
         
         
         file = open('text.txt', 'w+')
