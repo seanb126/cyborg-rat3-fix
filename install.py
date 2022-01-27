@@ -2,6 +2,7 @@ import os
 import platform
 import shutil
 from time import sleep
+from sympy import N
 from tqdm import tqdm
 
 from sqlalchemy import null
@@ -54,21 +55,34 @@ def check_file_exists():
 
         # program will of closed if user inputted 'no'
 
-        print("Removing old installation")
+        print("Reinstalling fix")
         os.remove("text.txt")
-        print(("DONE").center(cols))
 
         create_fix()
 
 def create_fix():
+    # progress bar
+    # three processes to be completed
+    pbar = tqdm(total=3, desc = "Installing fix")
     try:
         # raise Exception # tests try-catch
-        print("Installing fix")
+        
+        
         file = open('text.txt', 'w+')
-        print("DONE")
+        pbar.update(1)
+        sleep(0.5)
+
         file.write(FIX)
+        pbar.update(1)
+        sleep(0.5)
+
         file.close()
+        pbar.update(1)
+        sleep(0.5)
+
+        pbar.close()
         print("Process Complete")
+        
     except:
         print(f"{colors.ERROR}ERROR! There was an issue installing the fix{colors.ORIGINAL}\n")
         print("If this was unexpected: Please report the issue to 'github.com/seanb126/cyborg-rat3-fix/issues'")
@@ -93,6 +107,14 @@ if __name__ == '__main__':
     # Warning to user
     print((f"{colors.WARNING}WARNING: It is advised that you backup your system before installing!{colors.ORIGINAL}\n").center(cols))
 
+    # pbar = tqdm(total=1000)
+    
+    # for i in range(100):
+    #     pbar.update(10)
+    #     sleep(0.8)
+    # pbar.close()
+
+    
 
     yes_no("Do you wish to proceed")
     check_file_exists()
