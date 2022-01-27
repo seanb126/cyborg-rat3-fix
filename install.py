@@ -52,12 +52,12 @@ def remove_fix():
     pbar.update(1)
     sleep(0.5)
 
-    os.remove("text.txt")
+    os.remove("/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf")
     pbar.update(1)
     sleep(1)
 
     #alternate check
-    if os.path.exists('text.txt'):
+    if os.path.exists('/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf'):
         pbar.close()
         error_msg
         exit
@@ -93,13 +93,13 @@ def yes_no(question):
 # More comprehensive check if file exists method
 # Used at the init of script to determine menu options
 def check_file_exists():
-    if not os.path.exists('text.txt'):
+    if not os.path.exists('/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf'):
         # initiate install process
         # Warning to user
         print((f"{colors.WARNING}WARNING: It is advised that you backup your system before installing!{colors.ORIGINAL}\n").center(cols))
         yes_no("Do you wish to proceed")
         create_fix(False)
-    elif os.path.exists('text.txt'):
+    elif os.path.exists('/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf'):
         print(f"{colors.WARNING}WARNING:It appears that the fix has previously been installed{colors.ORIGINAL}\n")
         
         print(f"{colors.WARNING}If you wish to remove this fix type 'remove' instead{colors.ORIGINAL}\n")
@@ -116,7 +116,7 @@ def check_file_exists():
 
 # a basic callable function to check if install is present
 def basic_check():
-    if os.path.exists('text.txt'):
+    if os.path.exists('/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf'):
         pass
     else:
         # theres too many check operations (3?)
@@ -139,12 +139,12 @@ def create_fix(reinstall):
         # raise Exception # tests try-catch
 
         if reinstall == True:
-            os.remove("text.txt")
+            os.remove("/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf")
             pbar.update(1)
             sleep(0.5)
         
         # creates file in directory
-        file = open('text.txt', 'w+')
+        file = open('/etc/X11/xorg.conf.d/cyborg-rat3-fix.conf', 'w+')
         pbar.update(1)
         sleep(0.5)
 
